@@ -31,6 +31,11 @@ kotlin {
     jvmToolchain(jdkVersion = 17)
 
     val hostOs = DefaultNativePlatform.getCurrentOperatingSystem()
+
+    @Suppress(
+        "UnusedPrivateMember",
+        "UNUSED_VARIABLE",
+    )
     val nativeTarget = when {
         hostOs.isWindows -> mingwX64()
         hostOs.isLinux -> linuxX64()
