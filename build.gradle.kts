@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
     kotlin("multiplatform") version "1.8.10"
@@ -14,14 +13,6 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    /*
-     * For Kotlin/MPP, `mavenLocal()` should never be the 1st repository, as
-     * dependency resolution for non-JVM targets may fail.
-     *
-     * Yet, it may be useful if your project has snapshot dependencies
-     * (publishing to ~/.m2/ is unaffected by the presence of this call).
-     */
-    mavenLocal()
 }
 
 kotlin {
@@ -29,19 +20,6 @@ kotlin {
         withJava()
     }
     jvmToolchain(jdkVersion = 17)
-
-    val hostOs = DefaultNativePlatform.getCurrentOperatingSystem()
-
-    @Suppress(
-        "UnusedPrivateMember",
-        "UNUSED_VARIABLE",
-    )
-    val nativeTarget = when {
-        hostOs.isWindows -> mingwX64()
-        hostOs.isLinux -> linuxX64()
-        hostOs.isMacOsX -> macosX64()
-        else -> throw GradleException("Host OS $hostOs is not supported.")
-    }
 
     @Suppress(
         "UnusedPrivateMember",
