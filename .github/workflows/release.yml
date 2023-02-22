@@ -1,0 +1,93 @@
+name: 'Release'
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  GPG_SEC: ${{ secrets.PGP_SEC }}
+  GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+
+jobs:
+  release:
+    name: 'Release'
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Set up Java 17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: zulu
+          java-package: jdk+fx
+          cache: gradle
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: 'Publish a release (Linux)'
+        id: publish-linux
+        if: ${{ runner.os == 'Linux' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+            gradle-version: wrapper
+            arguments: |
+                build
+                publishJvmPublicationToGitHubRepository
+                publishKotlinMultiplatformPublicationToGitHubRepository
+                publishLinuxX64PublicationToGitHubRepository
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Publish a release (Windows)'
+        id: publish-windows
+        if: ${{ runner.os == 'Windows' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: |
+            build
+            publishMingwX64PublicationToGitHubRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Publish a release (Mac OS X)'
+        id: publish-macosx
+        if: ${{ runner.os == 'macOS' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: |
+            build
+            publishMacosX64PublicationToGitHubRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  github_release:
+    needs: release
+    name: 'Github Release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Github Release'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
