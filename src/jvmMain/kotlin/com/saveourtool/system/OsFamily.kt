@@ -2,29 +2,29 @@ package com.saveourtool.system
 
 import kotlin.reflect.KFunction0
 
-internal actual object OsFamily {
+actual object OsFamily {
     actual fun isWindows(): Boolean =
-        System.getProperty("os.name").let { osName: String? ->
+        osNameOrNull.let { osName: String? ->
             osName != null && osName.startsWith("Windows")
         }
 
     fun isLinux(): Boolean =
-        System.getProperty("os.name") == "Linux"
+        osNameOrNull == "Linux"
 
     fun isMacOsX(): Boolean =
-        System.getProperty("os.name") == "Mac OS X"
+        osNameOrNull == "Mac OS X"
 
     fun isSolaris(): Boolean =
-        System.getProperty("os.name") in sequenceOf("SunOS", "Solaris")
+        osNameOrNull in sequenceOf("SunOS", "Solaris")
 
     fun isFreeBsd(): Boolean =
-        System.getProperty("os.name") == "FreeBSD"
+        osNameOrNull == "FreeBSD"
 
     fun isAix(): Boolean =
-        System.getProperty("os.name") == "AIX"
+        osNameOrNull == "AIX"
 
     fun isHpUx(): Boolean =
-        System.getProperty("os.name") == "HP-UX"
+        osNameOrNull == "HP-UX"
 
     actual fun isUnix(): Boolean =
         sequenceOf(
@@ -38,4 +38,11 @@ internal actual object OsFamily {
 
     actual fun isUnknown(): Boolean =
         !isWindows() && !isUnix()
+
+    actual fun osName(): String =
+        osNameOrNull + ' ' + System.getProperty("os.version")
+
+    private val osNameOrNull: String?
+        get() =
+            System.getProperty("os.name")
 }

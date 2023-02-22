@@ -1,7 +1,5 @@
 package com.saveourtool.okio
 
-import com.saveourtool.okio.UriToPathConverter.Companion.SCHEME_FILE
-import com.saveourtool.okio.UriToPathConverter.Companion.SLASH
 import com.saveourtool.text.isAscii
 import okio.Path
 import okio.Path.Companion.toPath

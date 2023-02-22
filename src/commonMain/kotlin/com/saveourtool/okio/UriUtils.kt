@@ -2,11 +2,15 @@
 
 package com.saveourtool.okio
 
-import com.saveourtool.okio.UriToPathConverter.Companion.BACKSLASH
-import com.saveourtool.okio.UriToPathConverter.Companion.SLASH
 import com.saveourtool.text.isAscii
 import okio.ByteString
 import kotlin.jvm.JvmName
+
+const val SLASH = '/'
+const val BACKSLASH = '\\'
+const val URI_UNC_PATH_PREFIX = "//"
+
+internal const val SCHEME_FILE = "file"
 
 const val L_DIGIT = 0x3FF000000000000L // lowMask('0', '9');
 const val H_DIGIT = 0L
@@ -74,8 +78,8 @@ internal fun Uri.requireSchemeIs(desiredScheme: String) {
     }
 }
 
-internal fun String.slashify(): String =
+fun String.slashify(): String =
     replace(BACKSLASH, SLASH)
 
-internal fun String.backslashify(): String =
+fun String.backslashify(): String =
     replace(SLASH, BACKSLASH)

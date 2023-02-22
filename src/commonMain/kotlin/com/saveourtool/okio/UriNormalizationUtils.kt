@@ -3,7 +3,6 @@
 
 package com.saveourtool.okio
 
-import com.saveourtool.okio.UriToPathConverter.Companion.SLASH
 import kotlin.jvm.JvmName
 
 internal const val NUL = '\u0000'

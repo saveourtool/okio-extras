@@ -1,6 +1,5 @@
 package com.saveourtool.okio
 
-import com.saveourtool.okio.UriToPathConverter.Companion.SCHEME_FILE
 import com.saveourtool.system.OsFamily
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain

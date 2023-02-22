@@ -1,9 +1,5 @@
 package com.saveourtool.okio
 
-import com.saveourtool.okio.UriToPathConverter.Companion.BACKSLASH
-import com.saveourtool.okio.UriToPathConverter.Companion.SCHEME_FILE
-import com.saveourtool.okio.UriToPathConverter.Companion.SLASH
-import com.saveourtool.okio.UriToPathConverter.Companion.URI_UNC_PATH_PREFIX
 import okio.Path
 import okio.Path.Companion.toPath
 

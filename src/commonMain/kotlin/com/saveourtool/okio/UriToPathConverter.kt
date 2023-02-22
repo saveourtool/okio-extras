@@ -9,15 +9,11 @@ internal sealed interface UriToPathConverter {
     fun Path.toFileUri(): Uri
 
     companion object : UriToPathConverter {
-        const val SLASH = '/'
-        const val BACKSLASH = '\\'
-        const val SCHEME_FILE = "file"
-        const val URI_UNC_PATH_PREFIX = "//"
-
         override fun Uri.toLocalPath(): Path =
             when {
                 OsFamily.isWindows() -> WindowsUriToPathConverter
-                else -> UnixUriToPathConverter
+                OsFamily.isUnix() -> UnixUriToPathConverter
+                else -> throw NotImplementedError("Path conversion not implemented for ${OsFamily.osName()}")
             }.run {
                 toLocalPath()
             }
@@ -25,7 +21,8 @@ internal sealed interface UriToPathConverter {
         override fun Path.toFileUri(): Uri =
             when {
                 OsFamily.isWindows() -> WindowsUriToPathConverter
-                else -> UnixUriToPathConverter
+                OsFamily.isUnix() -> UnixUriToPathConverter
+                else -> throw NotImplementedError("Path conversion not implemented for ${OsFamily.osName()}")
             }.run {
                 toFileUri()
             }

@@ -5,7 +5,7 @@ import kotlin.native.OsFamily.WASM
 import kotlin.native.OsFamily.WINDOWS
 import kotlin.native.OsFamily.values
 
-internal actual object OsFamily {
+actual object OsFamily {
     actual fun isWindows(): Boolean =
         Platform.osFamily == WINDOWS
 
@@ -15,4 +15,7 @@ internal actual object OsFamily {
 
     actual fun isUnknown(): Boolean =
         !isWindows() && !isUnix()
+
+    actual fun osName(): String =
+        Platform.osFamily.name
 }
