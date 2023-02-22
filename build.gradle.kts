@@ -29,7 +29,7 @@ plugins {
 }
 
 group = "com.saveourtool"
-version = "1.1-SNAPSHOT"
+version = "1.1"
 description = "A set of extensions to Okio"
 
 repositories {
@@ -38,7 +38,7 @@ repositories {
 
 kotlin {
     jvm()
-    jvmToolchain(jdkVersion = 17)
+    jvmToolchain(jdkVersion = 8)
 
     @Suppress(
         "UnusedPrivateMember",
