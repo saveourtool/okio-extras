@@ -29,7 +29,7 @@ plugins {
 }
 
 group = "com.saveourtool"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 description = "A set of extensions to Okio"
 
 repositories {
