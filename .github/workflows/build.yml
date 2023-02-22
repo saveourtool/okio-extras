@@ -7,6 +7,10 @@ on:
       - 'master'
   workflow_dispatch:
 
+env:
+    GPG_SEC: ${{ secrets.PGP_SEC }}
+    GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+
 jobs:
   build:
     name: 'Build'
