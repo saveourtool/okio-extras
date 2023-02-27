@@ -26,6 +26,10 @@ configure<ReckonExtension> {
          */
         Optional.of(MINOR)
     }
+
+    setTagWriter { version ->
+        "v$version"
+    }
 }
 
 gradleEnterprise {
