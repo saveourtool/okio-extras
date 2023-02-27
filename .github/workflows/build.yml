@@ -13,8 +13,23 @@ env:
 
 jobs:
   build:
-    name: 'Build'
+    name: 'Build (Java ${{ matrix.java-version }})'
     runs-on: ubuntu-latest
+    strategy:
+      # We need multiple builds to run even if the 1st one is failing, because
+      # test failures may be Java-specific (or the tests themselves flaky).
+      #
+      # Java 8 is incompatible with `org.ajoberstar.reckon.settings`.
+      fail-fast: false
+      matrix:
+        java-version: [ '11', '17' ]
+
+    # A possible workaround for <https://github.com/dorny/test-reporter/issues/168>.
+    permissions:
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
 
     steps:
       - uses: actions/checkout@v3
@@ -25,11 +40,11 @@ jobs:
           # https://github.com/actions/checkout/issues/206#issuecomment-607496604.
           fetch-depth: 0
 
-      - name: 'Set up Java 17'
+      - name: 'Set up Java ${{ matrix.java-version }}'
         uses: actions/setup-java@v3
         with:
-          java-version: 17
           distribution: zulu
+          java-version: ${{ matrix.java-version }}
           java-package: jdk+fx
           cache: gradle
 
@@ -51,9 +66,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 'Publish a snapshot'
+      - name: 'Publish a snapshot (Java 17 only)'
         id: publish
-        if: ${{ github.event_name == 'push' && github.ref_type == 'branch' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref_type == 'branch' && github.ref == 'refs/heads/master' && matrix.java-version == 17 }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: wrapper
