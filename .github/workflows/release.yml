@@ -21,6 +21,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          # Fetch Git tags, so that semantic version can be calculated.
+          # Alternatively, run `git fetch --prune --unshallow --tags` as the
+          # next step, see
+          # https://github.com/actions/checkout/issues/206#issuecomment-607496604.
+          fetch-depth: 0
 
       - name: 'Set up Java 17'
         uses: actions/setup-java@v3
