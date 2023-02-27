@@ -18,7 +18,6 @@ plugins {
     `maven-publish`
     signing
     id("org.jetbrains.dokka") version "1.7.20"
-    id("org.ajoberstar.reckon") version "0.16.1"
 }
 
 group = "com.saveourtool"
@@ -70,18 +69,6 @@ kotlin {
             getByName("${target.name}Main").dependsOn(nativeMain)
             getByName("${target.name}Test").dependsOn(nativeTest)
         }
-    }
-}
-
-reckon {
-    snapshots()
-    setStageCalc(calcStageFromProp())
-    setScopeCalc {
-        /*
-         * MINOR: 1.0.0 -> 1.1.0-SNAPSHOT
-         * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
-         */
-        Optional.of(MINOR)
     }
 }
 
