@@ -17,6 +17,9 @@ plugins {
     `maven-publish`
     signing
     id("org.jetbrains.dokka") version "1.7.20"
+    id("io.github.gradle-nexus.publish-plugin") version "1.2.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("org.cqfn.diktat.diktat-gradle-plugin") version "1.2.4.2"
 }
 
 group = "com.saveourtool"
