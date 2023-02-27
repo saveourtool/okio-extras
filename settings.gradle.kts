@@ -1,4 +1,4 @@
-import org.ajoberstar.reckon.core.Scope.MINOR
+import org.ajoberstar.reckon.core.Scope.PATCH
 import org.ajoberstar.reckon.gradle.ReckonExtension
 import java.util.Optional
 
@@ -17,16 +17,31 @@ plugins {
 }
 
 configure<ReckonExtension> {
+    /*
+     * Only two stages are used, `snapshot` and `final`, `snapshot` being the
+     * default one.
+     */
     snapshots()
+
+    /*
+     * The stage is calculated from the `reckon.stage` property.
+     */
     setStageCalc(calcStageFromProp())
+
+    /*-
+     * How the version is incremented.
+     *
+     * MINOR: 1.0.0 -> 1.1.0-SNAPSHOT
+     * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
+     */
     setScopeCalc {
-        /*
-         * MINOR: 1.0.0 -> 1.1.0-SNAPSHOT
-         * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
-         */
-        Optional.of(MINOR)
+        Optional.of(PATCH)
     }
 
+    /*
+     * Run `./gradlew -Preckon.stage=final reckonTagCreate` when the Git
+     * repository is clean.
+     */
     setTagWriter { version ->
         "v$version"
     }
