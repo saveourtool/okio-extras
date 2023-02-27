@@ -56,7 +56,6 @@ jobs:
                 publishJvmPublicationToGitHubRepository
                 publishKotlinMultiplatformPublicationToGitHubRepository
                 publishLinuxX64PublicationToGitHubRepository
-                -x dokkaHtml
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,7 +68,6 @@ jobs:
           arguments: |
             build
             publishMingwX64PublicationToGitHubRepository
-            -x dokkaHtml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -82,7 +80,6 @@ jobs:
           arguments: |
             build
             publishMacosX64PublicationToGitHubRepository
-            -x dokkaHtml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
