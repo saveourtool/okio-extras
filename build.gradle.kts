@@ -3,14 +3,13 @@
     "KDocMissingDocumentation",
 )
 
-import org.ajoberstar.reckon.core.Scope.MINOR
+import org.ajoberstar.reckon.gradle.ReckonCreateTagTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.internal.logging.text.StyledTextOutput
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Failure
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Success
 import org.gradle.internal.logging.text.StyledTextOutputFactory
 import org.gradle.kotlin.dsl.support.serviceOf
-import java.util.Optional
 
 plugins {
     kotlin("multiplatform") version "1.8.10"
@@ -85,6 +84,10 @@ tasks.withType<Test> {
 
 tasks.withType<AbstractPublishToMaven> {
     dependsOn(tasks.withType<Sign>())
+}
+
+tasks.withType<ReckonCreateTagTask> {
+    dependsOn("check")
 }
 
 configurePublishing()
