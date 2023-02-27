@@ -3,22 +3,13 @@
     "KDocMissingDocumentation",
 )
 
+import org.ajoberstar.reckon.gradle.ReckonCreateTagTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.Named
-import org.gradle.api.Project
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.bundling.Jar
 import org.gradle.internal.logging.text.StyledTextOutput
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Failure
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Success
 import org.gradle.internal.logging.text.StyledTextOutputFactory
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.support.serviceOf
-import org.gradle.kotlin.dsl.withType
-import org.gradle.plugins.signing.SigningExtension
 
 plugins {
     kotlin("multiplatform") version "1.8.10"
@@ -29,7 +20,6 @@ plugins {
 }
 
 group = "com.saveourtool"
-version = "1.2-SNAPSHOT"
 description = "A set of extensions to Okio"
 
 repositories {
@@ -94,6 +84,10 @@ tasks.withType<Test> {
 
 tasks.withType<AbstractPublishToMaven> {
     dependsOn(tasks.withType<Sign>())
+}
+
+tasks.withType<ReckonCreateTagTask> {
+    dependsOn("check")
 }
 
 configurePublishing()
