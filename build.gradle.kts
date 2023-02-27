@@ -3,22 +3,14 @@
     "KDocMissingDocumentation",
 )
 
+import org.ajoberstar.reckon.core.Scope.MINOR
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.Named
-import org.gradle.api.Project
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.bundling.Jar
 import org.gradle.internal.logging.text.StyledTextOutput
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Failure
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Success
 import org.gradle.internal.logging.text.StyledTextOutputFactory
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.support.serviceOf
-import org.gradle.kotlin.dsl.withType
-import org.gradle.plugins.signing.SigningExtension
+import java.util.Optional
 
 plugins {
     kotlin("multiplatform") version "1.8.10"
@@ -26,10 +18,10 @@ plugins {
     `maven-publish`
     signing
     id("org.jetbrains.dokka") version "1.7.20"
+    id("org.ajoberstar.reckon") version "0.16.1"
 }
 
 group = "com.saveourtool"
-version = "1.2-SNAPSHOT"
 description = "A set of extensions to Okio"
 
 repositories {
@@ -78,6 +70,18 @@ kotlin {
             getByName("${target.name}Main").dependsOn(nativeMain)
             getByName("${target.name}Test").dependsOn(nativeTest)
         }
+    }
+}
+
+reckon {
+    snapshots()
+    setStageCalc(calcStageFromProp())
+    setScopeCalc {
+        /*
+         * MINOR: 1.0.0 -> 1.1.0-SNAPSHOT
+         * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
+         */
+        Optional.of(MINOR)
     }
 }
 
