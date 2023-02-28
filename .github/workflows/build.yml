@@ -78,7 +78,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
         with:
-          name: 'JUnit Tests (dorny/test-reporter)'
+          name: 'JUnit Tests (dorny/test-reporter, Java ${{ matrix.java-version }})'
           # Comma-separated values.
           path: "**/build/test-results/*/TEST-*.xml"
           reporter: java-junit
@@ -92,7 +92,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: xml-test-reports
+          name: xml-test-reports-java${{ matrix.java-version }}
           path: |
             **/build/test-results/*/TEST-*.xml
           retention-days: 1
@@ -123,6 +123,10 @@ jobs:
     if: ${{ always() }}
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version: [ '11', '17' ]
 
     permissions:
       checks: write
@@ -132,12 +136,12 @@ jobs:
       - uses: actions/download-artifact@v3
         if: ${{ always() }}
         with:
-          name: xml-test-reports
+          name: xml-test-reports-java${{ matrix.java-version }}
 
         # Uses Docker, that's why Linux-only.
       - name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action)'
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          check_name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action)'
+          check_name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action, Java ${{ matrix.java-version }})'
           files: |
             **/build/test-results/*/TEST-*.xml
