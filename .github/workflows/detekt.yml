@@ -48,7 +48,7 @@ jobs:
           gradle-version: wrapper
           arguments: |
             --continue
-            tasks
+            detektAll
 
       - name: 'Publish SARIF to GitHub'
         id: publish
