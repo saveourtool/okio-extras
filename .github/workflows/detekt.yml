@@ -7,7 +7,7 @@ on:
       - 'master'
 
 env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.caching=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
 
 jobs:
   detekt:
@@ -25,16 +25,6 @@ jobs:
           distribution: zulu
           java-version: 17
           java-package: jdk+fx
-          cache: gradle
-
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: 'Create the report directory'
         id: mkdir

@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.caching=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
   GPG_SEC: ${{ secrets.PGP_SEC }}
   GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
 
@@ -35,16 +35,6 @@ jobs:
           java-version: 17
           distribution: zulu
           java-package: jdk+fx
-          cache: gradle
-
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: 'Publish a release (Linux)'
         id: publish-linux
