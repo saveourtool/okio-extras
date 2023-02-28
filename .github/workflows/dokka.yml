@@ -1,0 +1,38 @@
+name: 'Dokka'
+
+on:
+  push:
+    branches:
+      - 'master'
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+
+jobs:
+  dokka:
+    name: 'Dokka'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Set up Java 17'
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+          java-package: jdk+fx
+
+      - name: 'Execute Gradle build'
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: |
+            dokkaHtml
+
+      - name: 'Publish to GitHub Pages'
+        id: publish
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/dokka/html
