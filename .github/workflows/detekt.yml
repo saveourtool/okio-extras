@@ -7,7 +7,7 @@ on:
       - 'master'
 
 env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.caching=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
 
 jobs:
   detekt:
