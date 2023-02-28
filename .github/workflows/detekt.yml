@@ -1,0 +1,52 @@
+name: 'Detekt'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'master'
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.caching=true -Dorg.gradle.console=rich -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+
+jobs:
+  detekt:
+    name: 'Detekt'
+    runs-on: ubuntu-latest
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Set up Java 17'
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+          java-package: jdk+fx
+          cache: gradle
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: 'Execute Gradle build'
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: |
+            --continue
+            tasks
+
+      - name: 'Publish SARIF to GitHub'
+        id: publish
+        if: ${{ always() }}
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: build/reports/detekt/
