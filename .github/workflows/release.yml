@@ -35,7 +35,6 @@ jobs:
           java-version: 17
           distribution: zulu
           java-package: jdk+fx
-          cache: gradle
 
       - name: 'Publish a release (Linux)'
         id: publish-linux

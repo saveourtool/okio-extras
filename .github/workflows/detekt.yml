@@ -25,7 +25,6 @@ jobs:
           distribution: zulu
           java-version: 17
           java-package: jdk+fx
-          cache: gradle
 
       - name: 'Create the report directory'
         id: mkdir
