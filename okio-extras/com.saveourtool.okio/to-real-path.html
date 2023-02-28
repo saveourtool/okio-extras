@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>toFileUri</title>
+    <title>toRealPath</title>
     <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../";</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
@@ -54,12 +54,12 @@
         <div id="sideMenu"></div>
     </div>
     <div id="main">
-<div class="main-content" id="content" pageIds="okio-extras::com.saveourtool.okio//toFileUri/okio.Path#/PointingToDeclaration//788909594">
-  <div class="breadcrumbs"><a href="../../index.html">okio-extras</a><span class="delimiter">/</span><a href="index.html">com.saveourtool.okio</a><span class="delimiter">/</span><span class="current">toFileUri</span></div>
+<div class="main-content" id="content" pageIds="okio-extras::com.saveourtool.okio//toRealPath/okio.Path#/PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../index.html">okio-extras</a><span class="delimiter">/</span><a href="index.html">com.saveourtool.okio</a><span class="delimiter">/</span><span class="current">toRealPath</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>to</span><wbr></wbr><span>File</span><wbr></wbr><span><span>Uri</span></span></h1>
+    <h1 class="cover"><span>to</span><wbr></wbr><span>Real</span><wbr></wbr><span><span>Path</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="okio/Path///PointingToDeclaration/">Path</span><span class="token punctuation">.</span><a href="to-file-uri.html"><span class="token function">toFileUri</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-uri/index.html">Uri</a></div><p class="paragraph">Converts this path to a <code class="lang-kotlin">file://</code> URI.</p><p class="paragraph">UNC paths, such as <code class="lang-kotlin">\\WSL$\Debian\etc\passwd</code> or <code class="lang-kotlin">\\--1.ipv6-literal.net\C$\Windows</code>, are supported on <i>Windows</i>.</p><span class="kdoc-tag"><h4 class="">Receiver</h4><p class="paragraph">the local or UNC path to convert.</p></span><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph">the <code class="lang-kotlin">file://</code> URI which corresponds to this path.</p></span></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="okio/Path///PointingToDeclaration/">Path</span><span class="token punctuation">.</span><a href="to-real-path.html"><span class="token function">toRealPath</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="okio/Path///PointingToDeclaration/">Path</span></div><p class="paragraph">Returns the <i>real</i> path of an existing file.</p><p class="paragraph">If this path is relative then its absolute path is first obtained, as if by invoking the <a href="absolute.html">Path.absolute</a> method.</p><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph">an absolute path represent the <i>real</i> path of the file located by this object.</p></span><h4 class="">See also</h4><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><a href="to-real-path-safe.html"><span>to</span><wbr></wbr><span>Real</span><wbr></wbr><span>Path</span><wbr></wbr><span><span>Safe</span></span></a></div></span></div><div></div></div></div></div></div><h4 class="">Throws</h4><div class="table" data-togglable="Throws"><div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><span data-unresolved-link="okio/IOException///PointingToDeclaration/"><span><span>IOException</span></span></span></div></span></div><div><div class="title"><p class="paragraph">if the file does not exist or an I/O error occurs.</p></div></div></div></div></div></div></div>
 </div>
       <div class="footer">
         <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
