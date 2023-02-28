@@ -11,6 +11,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 import java.io.File
 
+private const val PREFIX = "detekt"
+
 fun Project.configureDetekt() {
     tasks.withType<Detekt> {
         parallel = true
@@ -38,22 +40,18 @@ fun Project.configureDetekt() {
 
     detekt("detektCommonMain") {
         dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
-        source = fileTree(projectDir / "src" / "commonMain")
     }
 
     detekt("detektCommonTest") {
         dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
-        source = fileTree(projectDir / "src" / "commonTest")
     }
 
     detekt("detektJvmMain") {
         dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
-        source = fileTree(projectDir / "src" / "jvmMain")
     }
 
     detekt("detektJvmTest") {
         dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
-        source = fileTree(projectDir / "src" / "jvmTest")
     }
 
     detekt("detektNativeMain") {
@@ -62,7 +60,6 @@ fun Project.configureDetekt() {
             tasks.named<KotlinNativeCompile>("compileKotlinLinuxX64"),
             tasks.named<KotlinNativeCompile>("compileKotlinMacosX64"),
         )
-        source = fileTree(projectDir / "src" / "nativeMain")
     }
 
     detekt("detektNativeTest") {
@@ -71,7 +68,6 @@ fun Project.configureDetekt() {
             tasks.named<KotlinNativeCompile>("compileTestKotlinLinuxX64"),
             tasks.named<KotlinNativeCompile>("compileTestKotlinMacosX64"),
         )
-        source = fileTree(projectDir / "src" / "nativeTest")
     }
 
     tasks.register<DefaultTask>("detektAll") {
@@ -91,12 +87,31 @@ fun Project.configureDetekt() {
  */
 private fun Project.detekt(
     name: String,
-    configuration: Detekt.() -> Unit,
-) =
-    when (tasks.findByName(name)) {
+    configuration: Detekt.() -> Unit = {},
+) {
+    val taskProvider = when (tasks.findByName(name)) {
         null -> tasks.register<Detekt>(name)
         else -> tasks.named<Detekt>(name)
-    }(configuration)
+    }
+
+    taskProvider {
+        source = fileTree(projectDir / "src" / name.sourceSetName)
+    }
+    taskProvider(configuration)
+}
+
+private val String.sourceSetName: String
+    get() {
+        val suffix = when {
+            startsWith(PREFIX) -> substring(PREFIX.length).decapitalize()
+            else -> null
+        }
+
+        return when {
+            suffix.isNullOrEmpty() -> this
+            else -> suffix
+        }
+    }
 
 private operator fun File.div(relative: String): File =
     resolve(relative)
