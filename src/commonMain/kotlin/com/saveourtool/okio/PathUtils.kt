@@ -1,7 +1,9 @@
 @file:JvmName("PathUtils")
+@file:Suppress("TooManyFunctions")
 
 package com.saveourtool.okio
 
+import okio.IOException
 import okio.Path
 import okio.Path.Companion.toPath
 import kotlin.jvm.JvmName
@@ -64,11 +66,119 @@ val Path.pathString: String
     get() =
         toString()
 
+/**
+ * Returns the _real_ path of an existing file.
+ *
+ * If this path is relative then its absolute path is first obtained, as if by
+ * invoking the [Path.absolute] method.
+ *
+ * @return an absolute path represent the _real_ path of the file located by
+ *   this object.
+ * @throws IOException if the file does not exist or an I/O error occurs.
+ * @see Path.toRealPathSafe
+ */
+@Throws(IOException::class)
+internal fun Path.toRealPath(): Path =
+    fileSystem.canonicalize(this)
+
+/**
+ * Same as [Path.toRealPath], but doesn't throw an exception if the path doesn't
+ * exist.
+ *
+ * @return an absolute path represent the _real_ path of the file located by
+ *   this object, or an absolute normalized path if the file doesn't exist.
+ * @see Path.toRealPath
+ */
+internal fun Path.toRealPathSafe(): Path =
+    try {
+        toRealPath()
+    } catch (_: IOException) {
+        absolute().normalized()
+    }
+
+/**
+ * Checks if the file located by this path points to the same file or directory
+ * as [other].
+ *
+ * @param other the other path.
+ * @return `true` if, and only if, the two paths locate the same file.
+ * @throws IOException if an I/O error occurs.
+ * @see Path.isSameFileAsSafe
+ */
+@Throws(IOException::class)
+fun Path.isSameFileAs(other: Path): Boolean =
+    this.toRealPath() == other.toRealPath()
+
+/**
+ * Checks if the file located by this path points to the same file or directory
+ * as [other].
+ * Same as [Path.isSameFileAs], but doesn't throw an exception if any of the
+ * paths doesn't exist.
+ *
+ * @param other the other path.
+ * @return `true` if the two paths locate the same file.
+ * @see Path.isSameFileAs
+ */
+fun Path.isSameFileAsSafe(other: Path): Boolean =
+    try {
+        this.isSameFileAs(other)
+    } catch (_: IOException) {
+        this.toRealPathSafe() == other.toRealPathSafe()
+    }
+
+/**
+ * Creates a directory, ensuring that all nonexistent parent directories exist
+ * by creating them first.
+ *
+ * If the directory already exists, this function does not throw an exception.
+ *
+ * @return this path.
+ * @throws IOException if an I/O error occurs.
+ */
+@Suppress("unused")
+@Throws(IOException::class)
+fun Path.createDirectories(): Path {
+    fileSystem.createDirectories(this)
+    return this
+}
+
+/**
+ * Same as [Path.relativeTo], but doesn't throw an [IllegalArgumentException] if
+ * `this` and [other] are both absolute paths, but have different file system
+ * roots.
+ *
+ * @param other the other path.
+ * @return this path relativized against [other],
+ *   or `this` if this and other have different file system roots.
+ */
+@Suppress("unused")
+fun Path.relativeToSafe(other: Path): Path =
+    try {
+        relativeTo(other)
+    } catch (_: IllegalArgumentException) {
+        this
+    }
+
+/**
+ * Converts this path to a `file://` URI.
+ *
+ * UNC paths, such as `\\WSL$\Debian\etc\passwd` or
+ * `\\--1.ipv6-literal.net\C$\Windows`, are supported on _Windows_.
+ *
+ * @receiver the local or UNC path to convert.
+ * @return the `file://` URI which corresponds to this path.
+ */
 fun Path.toFileUri(): Uri =
     with(UriToPathConverter) {
         toFileUri()
     }
 
+/**
+ * Converts this `file://` URI to a local or UNC path.
+ *
+ * @receiver the `file://` URI to convert.
+ * @return the local or UNC path which corresponds to this URI.
+ */
 fun Uri.toLocalPath(): Path =
     with(UriToPathConverter) {
         toLocalPath()
