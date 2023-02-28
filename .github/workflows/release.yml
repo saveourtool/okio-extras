@@ -37,15 +37,6 @@ jobs:
           java-package: jdk+fx
           cache: gradle
 
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: 'Publish a release (Linux)'
         id: publish-linux
         if: ${{ runner.os == 'Linux' }}
