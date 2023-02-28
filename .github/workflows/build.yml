@@ -119,7 +119,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   report:
-    name: 'Publish JUnit test results'
+    name: 'Publish JUnit test results (Java ${{ matrix.java-version }})'
     if: ${{ always() }}
     needs: build
     runs-on: ubuntu-latest
