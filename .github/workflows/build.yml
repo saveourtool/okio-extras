@@ -50,7 +50,55 @@ jobs:
           java-version: ${{ matrix.java-version }}
           java-package: jdk+fx
 
+      - name: 'Run unit tests'
+        id: test
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          # Neither `check` nor `allTests` targets result in JUnit XML reports
+          # being generated for a KMP project, even if `Test`/`KotlinTest` tasks
+          # are configured properly, see https://youtrack.jetbrains.com/issue/KT-32608.
+          #
+          # The only workaround is to manually invoke all `xyzTest` targets.
+          #
+          # The `build` target should be invoked in a separate step, otherwise,
+          # all `*Test` targets are considered its dependencies and skipped.
+          arguments: |
+            jvmTest
+            mingwX64Test
+            linuxX64Test
+            macosX64Test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        # This step needs a Git repository, so it's impossible to extract it
+        # into a separate job (or, otherwise, we'd need to upload the content
+        # of the whole `.git` folder as an artifact).
+      - name: 'JUnit Tests (dorny/test-reporter)'
+        uses: dorny/test-reporter@v1
+        if: ${{ always() }}
+        with:
+          name: 'JUnit Tests (dorny/test-reporter, Java ${{ matrix.java-version }})'
+          # Comma-separated values.
+          path: "**/build/test-results/*/TEST-*.xml"
+          reporter: java-junit
+        # Ignore the "Resource not accessible by integration" error when a PR
+        # originates from a non-collaborator. This is
+        # <https://github.com/dorny/test-reporter/issues/168> which may be
+        # potentially fixed with <https://github.com/dorny/test-reporter/pull/174>.
+        continue-on-error: true
+
+      - name: 'Upload test results'
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: xml-test-reports-java${{ matrix.java-version }}
+          path: |
+            **/build/test-results/*/TEST-*.xml
+          retention-days: 1
+
       - name: 'Execute Gradle build'
+        id: build
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: wrapper
@@ -69,3 +117,31 @@ jobs:
             publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  report:
+    name: 'Publish JUnit test results (Java ${{ matrix.java-version }})'
+    if: ${{ always() }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version: [ '11', '17' ]
+
+    permissions:
+      checks: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/download-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: xml-test-reports-java${{ matrix.java-version }}
+
+        # Uses Docker, that's why Linux-only.
+      - name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action)'
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action, Java ${{ matrix.java-version }})'
+          files: |
+            **/build/test-results/*/TEST-*.xml
