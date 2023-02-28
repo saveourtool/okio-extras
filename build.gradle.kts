@@ -90,7 +90,7 @@ tasks.withType<AbstractPublishToMaven> {
 }
 
 tasks.withType<ReckonCreateTagTask> {
-    dependsOn("check")
+    dependsOn(tasks.check)
 }
 
 configurePublishing()
