@@ -13,6 +13,9 @@ import java.io.File
 
 private const val PREFIX = "detekt"
 
+/**
+ * Configures _Detekt_ for this project.
+ */
 fun Project.configureDetekt() {
     tasks.withType<Detekt> {
         parallel = true
@@ -38,37 +41,12 @@ fun Project.configureDetekt() {
         }
     }
 
-    detekt("detektCommonMain") {
-        dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
-    }
-
-    detekt("detektCommonTest") {
-        dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
-    }
-
-    detekt("detektJvmMain") {
-        dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
-    }
-
-    detekt("detektJvmTest") {
-        dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
-    }
-
-    detekt("detektNativeMain") {
-        dependsOn(
-            tasks.named<KotlinNativeCompile>("compileKotlinMingwX64"),
-            tasks.named<KotlinNativeCompile>("compileKotlinLinuxX64"),
-            tasks.named<KotlinNativeCompile>("compileKotlinMacosX64"),
-        )
-    }
-
-    detekt("detektNativeTest") {
-        dependsOn(
-            tasks.named<KotlinNativeCompile>("compileTestKotlinMingwX64"),
-            tasks.named<KotlinNativeCompile>("compileTestKotlinLinuxX64"),
-            tasks.named<KotlinNativeCompile>("compileTestKotlinMacosX64"),
-        )
-    }
+    detekt("detektCommonMain")
+    detekt("detektCommonTest")
+    detekt("detektJvmMain")
+    detekt("detektJvmTest")
+    detekt("detektNativeMain")
+    detekt("detektNativeTest")
 
     tasks.register<DefaultTask>("detektAll") {
         dependsOn(
@@ -84,6 +62,8 @@ fun Project.configureDetekt() {
 
 /**
  * Configures a _Detekt_ task, creating it if necessary.
+ *
+ * @param configuration extra configuration, may be empty.
  */
 private fun Project.detekt(
     name: String,
@@ -95,7 +75,26 @@ private fun Project.detekt(
     }
 
     taskProvider {
-        source = fileTree(projectDir / "src" / name.sourceSetName)
+        val sourceSetName = name.sourceSetName
+
+        source = fileTree(projectDir / "src" / sourceSetName)
+
+        val isTest = sourceSetName.endsWith("Test")
+        val dependencyNamePrefix = when {
+            isTest -> "compileTestKotlin"
+            else -> "compileKotlin"
+        }
+
+        val isNative = sourceSetName.startsWith("native")
+        when {
+            isNative -> dependsOn(
+                tasks.named<KotlinNativeCompile>(dependencyNamePrefix + "MingwX64"),
+                tasks.named<KotlinNativeCompile>(dependencyNamePrefix + "LinuxX64"),
+                tasks.named<KotlinNativeCompile>(dependencyNamePrefix + "MacosX64"),
+            )
+
+            else -> dependsOn(tasks.named<KotlinCompile>(dependencyNamePrefix + "Jvm"))
+        }
     }
     taskProvider(configuration)
 }
