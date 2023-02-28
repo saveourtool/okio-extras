@@ -49,6 +49,8 @@ fun Project.configureDetekt() {
     detekt("detektNativeTest")
 
     tasks.register<DefaultTask>("detektAll") {
+        group = "verification"
+
         dependsOn(
             tasks.named<Detekt>("detektCommonMain"),
             tasks.named<Detekt>("detektCommonTest"),
