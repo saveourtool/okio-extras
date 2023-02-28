@@ -3,6 +3,7 @@ package com.saveourtool.buildutils
 import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
@@ -35,27 +36,27 @@ fun Project.configureDetekt() {
         }
     }
 
-    tasks.register<Detekt>("detektCommonMain") {
+    detekt("detektCommonMain") {
         dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
         source = fileTree(projectDir / "src" / "commonMain")
     }
 
-    tasks.register<Detekt>("detektCommonTest") {
+    detekt("detektCommonTest") {
         dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
         source = fileTree(projectDir / "src" / "commonTest")
     }
 
-    tasks.named<Detekt>("detektJvmMain") {
+    detekt("detektJvmMain") {
         dependsOn(tasks.named<KotlinCompile>("compileKotlinJvm"))
         source = fileTree(projectDir / "src" / "jvmMain")
     }
 
-    tasks.named<Detekt>("detektJvmTest") {
+    detekt("detektJvmTest") {
         dependsOn(tasks.named<KotlinCompile>("compileTestKotlinJvm"))
         source = fileTree(projectDir / "src" / "jvmTest")
     }
 
-    tasks.register<Detekt>("detektNativeMain") {
+    detekt("detektNativeMain") {
         dependsOn(
             tasks.named<KotlinNativeCompile>("compileKotlinMingwX64"),
             tasks.named<KotlinNativeCompile>("compileKotlinLinuxX64"),
@@ -64,7 +65,7 @@ fun Project.configureDetekt() {
         source = fileTree(projectDir / "src" / "nativeMain")
     }
 
-    tasks.register<Detekt>("detektNativeTest") {
+    detekt("detektNativeTest") {
         dependsOn(
             tasks.named<KotlinNativeCompile>("compileTestKotlinMingwX64"),
             tasks.named<KotlinNativeCompile>("compileTestKotlinLinuxX64"),
@@ -84,6 +85,18 @@ fun Project.configureDetekt() {
         )
     }
 }
+
+/**
+ * Configures a _Detekt_ task, creating it if necessary.
+ */
+private fun Project.detekt(
+    name: String,
+    configuration: Detekt.() -> Unit,
+) =
+    when (tasks.findByName(name)) {
+        null -> tasks.register<Detekt>(name)
+        else -> tasks.named<Detekt>(name)
+    }(configuration)
 
 private operator fun File.div(relative: String): File =
     resolve(relative)
