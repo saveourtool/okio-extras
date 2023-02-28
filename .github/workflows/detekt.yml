@@ -36,6 +36,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: 'Create the report directory'
+        id: mkdir
+        run: |
+          mkdir -p build/reports/detekt/
+        shell: bash
+
       - name: 'Execute Gradle build'
         uses: gradle/gradle-build-action@v2
         with:
