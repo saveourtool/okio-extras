@@ -78,7 +78,7 @@ val Path.pathString: String
  * @see Path.toRealPathSafe
  */
 @Throws(IOException::class)
-internal fun Path.toRealPath(): Path =
+fun Path.toRealPath(): Path =
     fileSystem.canonicalize(this)
 
 /**
@@ -89,7 +89,7 @@ internal fun Path.toRealPath(): Path =
  *   this object, or an absolute normalized path if the file doesn't exist.
  * @see Path.toRealPath
  */
-internal fun Path.toRealPathSafe(): Path =
+fun Path.toRealPathSafe(): Path =
     try {
         toRealPath()
     } catch (_: IOException) {
