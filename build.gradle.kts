@@ -11,6 +11,7 @@ import org.gradle.internal.logging.text.StyledTextOutput.Style.Failure
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Success
 import org.gradle.internal.logging.text.StyledTextOutputFactory
 import org.gradle.kotlin.dsl.support.serviceOf
+import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
 plugins {
     kotlin("multiplatform")
@@ -84,6 +85,18 @@ tasks.withType<Test> {
         exceptionFormat = FULL
         events("passed", "skipped")
     }
+}
+
+/*
+ * This is expected to work some day (but currently it does not),
+ * see https://youtrack.jetbrains.com/issue/KT-32608.
+ */
+tasks.withType<KotlinTest> {
+    reports.junitXml.required.set(true)
+}
+
+tasks.withType<Test> {
+    reports.junitXml.required.set(true)
 }
 
 tasks.withType<AbstractPublishToMaven> {
