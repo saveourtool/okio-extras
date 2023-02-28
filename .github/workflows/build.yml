@@ -30,6 +30,8 @@ jobs:
       contents: write
       pull-requests: write
       statuses: write
+      # Explicitly granted, necessary for the `publish` step.
+      packages: write
 
     steps:
       - uses: actions/checkout@v3
