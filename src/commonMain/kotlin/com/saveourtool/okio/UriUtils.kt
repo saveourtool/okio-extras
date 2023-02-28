@@ -55,6 +55,7 @@ const val H_SCHEME = H_ALPHA or H_DIGIT // | highMask("+-.") == 0L
 const val L_SCOPE_ID = L_ALPHANUM or 0x400000000000L // lowMask("_.");
 const val H_SCOPE_ID = H_ALPHANUM or 0x80000000L // highMask("_.");
 
+@Suppress("MagicNumber")
 internal fun match(char: Char, lowMask: Long, highMask: Long): Boolean =
     when {
         // 0 doesn't have a slot in the mask. So, it never matches.

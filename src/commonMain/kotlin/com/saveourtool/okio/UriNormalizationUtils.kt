@@ -25,6 +25,11 @@ internal fun normalize(original: Uri): Uri {
     }
 }
 
+@Suppress(
+    "CyclomaticComplexMethod",
+    "NestedBlockDepth",
+    "LoopWithTooManyJumpStatements",
+)
 private fun needsNormalization(path: String): Int {
     var normal = true
     var segmentCount = 0 // Number of segments
@@ -101,6 +106,10 @@ private fun normalize(path: String): String {
     }
 }
 
+@Suppress(
+    "NestedBlockDepth",
+    "LoopWithTooManyJumpStatements",
+)
 private fun split(path: CharArray, segments: IntArray) {
     val endIndex = path.size - 1 // Index of last char in path
     var p = 0 // Index of next char in path
@@ -169,6 +178,11 @@ private fun join(path: CharArray, segments: IntArray): Int {
     return p
 }
 
+@Suppress(
+    "CyclomaticComplexMethod",
+    "NestedBlockDepth",
+    "LoopWithTooManyJumpStatements",
+)
 private fun removeDots(path: CharArray, segments: IntArray) {
     val segmentCount = segments.size
     val endIndex = path.size - 1
@@ -226,6 +240,7 @@ private fun removeDots(path: CharArray, segments: IntArray) {
     }
 }
 
+@Suppress("ReturnCount")
 private fun maybeAddLeadingDot(path: CharArray, segments: IntArray) {
     if (path[0] == NUL) // The path is absolute
         return
@@ -273,6 +288,7 @@ private fun String.hasDotBeforeSlash(index: Int): Boolean =
             this[index] == '.' &&
             this[index + 1] == SLASH
 
+@Suppress("MagicNumber")
 private fun String.hasTwoDotsBeforeSlash(index: Int): Boolean =
     index <= length - 3 &&
             this[index] == '.' &&
