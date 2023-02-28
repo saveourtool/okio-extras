@@ -1,0 +1,1 @@
+sourceset_dependencies='{":dokkaHtml/commonMain":[],":dokkaHtml/jvmMain":[":dokkaHtml/commonMain"],":dokkaHtml/linuxX64Main":[":dokkaHtml/commonMain",":dokkaHtml/nativeMain"],":dokkaHtml/macosX64Main":[":dokkaHtml/commonMain",":dokkaHtml/nativeMain"],":dokkaHtml/mingwX64Main":[":dokkaHtml/commonMain",":dokkaHtml/nativeMain"],":dokkaHtml/nativeMain":[":dokkaHtml/commonMain"]}'
