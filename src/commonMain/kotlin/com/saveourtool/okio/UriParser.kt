@@ -163,6 +163,10 @@ internal class UriParser(private val rawUri: String) {
         return n
     }
 
+    @Suppress(
+        "CyclomaticComplexMethod",
+        "NestedBlockDepth",
+    )
     private fun parseServer(startIndex: Int, n: Int): Int {
         var index = startIndex
 
@@ -238,6 +242,7 @@ internal class UriParser(private val rawUri: String) {
         }
     }
 
+    @Suppress("MagicNumber")
     private fun parseIPv6Reference(startIndex: Int, n: Int) {
         var index = startIndex
         var compressedZeros = false
@@ -305,6 +310,7 @@ internal class UriParser(private val rawUri: String) {
         return index
     }
 
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun parseHostname(startIndex: Int, n: Int): Int {
         var index = startIndex
         var q: Int
@@ -354,6 +360,7 @@ internal class UriParser(private val rawUri: String) {
         return index
     }
 
+    @Suppress("MagicNumber")
     private fun scanHexPost(startIndex: Int, n: Int): Int {
         var index = startIndex
 
@@ -396,6 +403,10 @@ internal class UriParser(private val rawUri: String) {
         }
     }
 
+    @Suppress(
+        "CyclomaticComplexMethod",
+        "LoopWithTooManyJumpStatements",
+    )
     private fun scanIPv4Address(startIndex: Int, n: Int, strict: Boolean): Int {
         var index = startIndex
         var q: Int
@@ -505,6 +516,7 @@ internal class UriParser(private val rawUri: String) {
         return index
     }
 
+    @Suppress("MagicNumber")
     private fun scanEscape(startIndex: Int, n: Int, first: Char): Int {
         if (first == '%') {
             // Process escape pair
@@ -525,6 +537,7 @@ internal class UriParser(private val rawUri: String) {
         }
     }
 
+    @Suppress("LoopWithTooManyJumpStatements")
     private fun scan(
         startIndex: Int,
         n: Int,
@@ -571,6 +584,7 @@ internal class UriParser(private val rawUri: String) {
     ) =
         checkChars(index, index + 1, lowMask, highMask, what)
 
+    @Suppress("MagicNumber")
     private fun scanByte(startIndex: Int, n: Int): Int {
         val index = scan(startIndex, n, L_DIGIT, H_DIGIT)
 
@@ -583,6 +597,11 @@ internal class UriParser(private val rawUri: String) {
         }
     }
 
+    @Suppress(
+        "MagicNumber",
+        "ReturnCount",
+        "LoopWithTooManyJumpStatements",
+    )
     private fun scanHexSeq(startIndex: Int, n: Int): Int {
         var index = startIndex
         var q = scan(index, n, L_HEX, H_HEX)

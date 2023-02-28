@@ -188,6 +188,7 @@ class Uri internal constructor(
             }
         }
 
+        @Suppress("MagicNumber")
         private fun StringBuilder.appendEncoded(char: Char) {
             val bytes = char.toString().encodeToByteArray()
             bytes.forEach { signedByte ->
@@ -234,6 +235,7 @@ class Uri internal constructor(
             return buffer?.toString() ?: this
         }
 
+        @Suppress("MagicNumber")
         private fun decode(c: Char): Int =
             when (c) {
                 in '0'..'9' -> c.code - '0'.code
@@ -245,6 +247,7 @@ class Uri internal constructor(
                 }
             }
 
+        @Suppress("MagicNumber")
         private fun decode(c1: Char, c2: Char): Byte =
             (decode(c1) and 0xf shl 4 or
                     (decode(c2) and 0xf shl 0)).toByte()
