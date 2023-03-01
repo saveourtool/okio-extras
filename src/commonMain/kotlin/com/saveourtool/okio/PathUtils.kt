@@ -167,6 +167,7 @@ fun Path.relativeToSafe(other: Path): Path =
  *
  * @receiver the local or UNC path to convert.
  * @return the `file://` URI which corresponds to this path.
+ * @see Uri.toLocalPath
  */
 fun Path.toFileUri(): Uri =
     with(UriToPathConverter) {
@@ -178,6 +179,7 @@ fun Path.toFileUri(): Uri =
  *
  * @receiver the `file://` URI to convert.
  * @return the local or UNC path which corresponds to this URI.
+ * @see Path.toFileUri
  */
 fun Uri.toLocalPath(): Path =
     with(UriToPathConverter) {
