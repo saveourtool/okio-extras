@@ -30,11 +30,15 @@ jobs:
           java-version: 17
           java-package: jdk+fx
 
-      - name: 'Create the report directory'
-        id: mkdir
-        run: |
-          mkdir -p build/reports/detekt/
-        shell: bash
+      - name: Cache ~/.konan
+        id: cache-konan
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-konan-
 
       - name: 'Execute Gradle build'
         uses: gradle/gradle-build-action@v2
