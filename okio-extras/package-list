@@ -11,14 +11,14 @@ $dokka.location:com.saveourtool.okio//createDirectories/okio.Path#/PointingToDec
 $dokka.location:com.saveourtool.okio//isDirectory/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-directory.html
 $dokka.location:com.saveourtool.okio//isRegularFile/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-regular-file.html
 $dokka.location:com.saveourtool.okio//isSameFileAs/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-same-file-as.html
-$dokka.location:com.saveourtool.okio//isSameFileAsSafe/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-same-file-as-safe.html
 $dokka.location:com.saveourtool.okio//pathString/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/path-string.html
-$dokka.location:com.saveourtool.okio//relativeToSafe/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/relative-to-safe.html
+$dokka.location:com.saveourtool.okio//safeIsSameFileAs/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-is-same-file-as.html
+$dokka.location:com.saveourtool.okio//safeRelativeTo/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-relative-to.html
+$dokka.location:com.saveourtool.okio//safeToRealPath/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-to-real-path.html
 $dokka.location:com.saveourtool.okio//slashify/kotlin.String#/PointingToDeclaration/okio-extras/com.saveourtool.okio/slashify.html
 $dokka.location:com.saveourtool.okio//toFileUri/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-file-uri.html
 $dokka.location:com.saveourtool.okio//toLocalPath/com.saveourtool.okio.Uri#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-local-path.html
 $dokka.location:com.saveourtool.okio//toRealPath/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-real-path.html
-$dokka.location:com.saveourtool.okio//toRealPathSafe/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-real-path-safe.html
 $dokka.location:com.saveourtool.okio/Uri.Companion///PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/index.html
 $dokka.location:com.saveourtool.okio/Uri.Companion/invoke/#kotlin.String/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/invoke.html
 $dokka.location:com.saveourtool.okio/Uri.Companion/invoke/#kotlin.String?#kotlin.String?/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/invoke.html
