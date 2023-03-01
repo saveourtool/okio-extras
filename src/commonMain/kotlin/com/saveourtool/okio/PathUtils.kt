@@ -75,7 +75,7 @@ val Path.pathString: String
  * @return an absolute path represent the _real_ path of the file located by
  *   this object.
  * @throws IOException if the file does not exist or an I/O error occurs.
- * @see Path.toRealPathSafe
+ * @see Path.safeToRealPath
  */
 @Throws(IOException::class)
 fun Path.toRealPath(): Path =
@@ -89,7 +89,7 @@ fun Path.toRealPath(): Path =
  *   this object, or an absolute normalized path if the file doesn't exist.
  * @see Path.toRealPath
  */
-fun Path.toRealPathSafe(): Path =
+fun Path.safeToRealPath(): Path =
     try {
         toRealPath()
     } catch (_: IOException) {
@@ -103,7 +103,7 @@ fun Path.toRealPathSafe(): Path =
  * @param other the other path.
  * @return `true` if, and only if, the two paths locate the same file.
  * @throws IOException if an I/O error occurs.
- * @see Path.isSameFileAsSafe
+ * @see Path.safeIsSameFileAs
  */
 @Throws(IOException::class)
 fun Path.isSameFileAs(other: Path): Boolean =
@@ -119,11 +119,11 @@ fun Path.isSameFileAs(other: Path): Boolean =
  * @return `true` if the two paths locate the same file.
  * @see Path.isSameFileAs
  */
-fun Path.isSameFileAsSafe(other: Path): Boolean =
+fun Path.safeIsSameFileAs(other: Path): Boolean =
     try {
         this.isSameFileAs(other)
     } catch (_: IOException) {
-        this.toRealPathSafe() == other.toRealPathSafe()
+        this.safeToRealPath() == other.safeToRealPath()
     }
 
 /**
@@ -152,7 +152,7 @@ fun Path.createDirectories(): Path {
  *   or `this` if this and other have different file system roots.
  */
 @Suppress("unused")
-fun Path.relativeToSafe(other: Path): Path =
+fun Path.safeRelativeTo(other: Path): Path =
     try {
         relativeTo(other)
     } catch (_: IllegalArgumentException) {
