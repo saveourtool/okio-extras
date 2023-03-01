@@ -56,8 +56,9 @@ jobs:
         with:
           path: |
             ~/.konan
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-build-java${{ matrix.java-version }}
           restore-keys: |
+            ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-
             ${{ runner.os }}-konan-
 
       - name: 'Run unit tests'
