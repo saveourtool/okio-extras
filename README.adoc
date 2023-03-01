@@ -8,9 +8,95 @@ image::https://img.shields.io/badge/License-MIT-yellow.svg[License: MIT,link="ht
 
 [.left]
 image::https://github.com/saveourtool/okio-extras/actions/workflows/build.yml/badge.svg?branch=master[,link="https://github.com/saveourtool/okio-extras/actions/workflows/build.yml?query=branch%3Amaster"]
+
+[.left]
+image::https://badgen.net/github/release/saveourtool/okio-extras/latest?color=green[GitHub release,link=https://github.com/saveourtool/okio-extras/releases/latest]
 --
 
 A set of extensions to https://square.github.io/okio/[_Okio_].
 
 See the https://saveourtool.github.io/okio-extras[project website] for
 documentation and APIs.
+
+== Features
+
+Among other useful multiplatform extensions, which are modelled after `kotlin.io`
+API available on the JVM, the library provides a way to convert a file system
+path to a `file://` URI and vice versa:
+
+[source,kotlin]
+----
+// Will print "file:/C:/Windows/"
+println("C:\\Windows".toPath().toFileUri())
+
+// Will print "C:\Program Files"
+println(Uri("file:///C:/Program%20Files").toLocalPath().pathString)
+----
+
+UNC paths are supported on _Windows_:
+
+[source,kotlin]
+----
+// Will print "\\127.0.0.1\C$\Windows"
+println(Uri("file:////127.0.0.1/C$/Windows").toLocalPath().pathString)
+
+// Will print "\\WSL$\Debian\etc\passwd"
+println(Uri("file:////WSL$/Debian/etc/passwd").toLocalPath().pathString)
+----
+
+IPv6 addresses are parsed correctly:
+
+[source,kotlin]
+----
+// Will print "\\--1.ipv6-literal.net\C$\Windows"
+println(Uri("file://[::1]/C$/Windows").toLocalPath().pathString)
+----
+
+== Releases
+
+The latest release is available from _GitHub Packages_.
+
+For `build.gradle.kts`:
+
+[source,kotlin]
+----
+repositories {
+    maven {
+        name = "saveourtool/okio-extras"
+        url = uri("https://maven.pkg.github.com/saveourtool/okio-extras")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+----
+
+For `settings.gradle.kts`:
+
+[source,kotlin]
+----
+dependencyResolutionManagement {
+    repositories {
+        maven {
+            name = "saveourtool/okio-extras"
+            url = uri("https://maven.pkg.github.com/saveourtool/okio-extras")
+            credentials {
+                username = providers.gradleProperty("gpr.user")
+                    .orElse(System.getenv("GITHUB_ACTOR")).get()
+                password = providers.gradleProperty("gpr.key")
+                    .orElse(System.getenv("GITHUB_TOKEN")).get()
+            }
+        }
+    }
+}
+----
+
+Then add the dependency as usual:
+
+[source,kotlin]
+----
+dependencies {
+    implementation("com.saveourtool:okio-extras:1.1.1")
+}
+----
