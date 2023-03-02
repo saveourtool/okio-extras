@@ -56,5 +56,7 @@ jobs:
           use-gradlew: true
           gradle-build-module: |-
             :
+          # `compileClasspath` configuration has no dependencies in multiplatform
+          # projects.
           gradle-build-configuration: |-
-            compileClasspath
+            jvmCompileClasspath
