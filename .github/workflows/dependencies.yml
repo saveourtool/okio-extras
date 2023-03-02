@@ -1,4 +1,4 @@
-name: 'Dokka'
+name: 'Dependencies'
 
 on:
   push:
@@ -9,9 +9,13 @@ env:
   GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
 
 jobs:
-  dokka:
-    name: 'Dokka'
+  dependencies:
+    name: 'Dependencies'
     runs-on: ubuntu-latest
+
+    # The Dependency Submission API requires write permission.
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v3
@@ -35,21 +39,22 @@ jobs:
         with:
           path: |
             ~/.konan
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-dokka
+          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-dependencies
           restore-keys: |
             ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-
             ${{ runner.os }}-konan-
 
-      - name: 'Execute Gradle build'
+      - name: 'Set up Gradle'
+        id: build
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: wrapper
-          arguments: |
-            dokkaHtml
 
-      - name: 'Publish to GitHub Pages'
-        id: publish
-        uses: peaceiris/actions-gh-pages@v3
+      - name: 'Run snapshot action'
+        uses: mikepenz/gradle-dependency-submission@v0.8.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/dokka/html
+          use-gradlew: true
+          gradle-build-module: |-
+            :
+          gradle-build-configuration: |-
+            compileClasspath
