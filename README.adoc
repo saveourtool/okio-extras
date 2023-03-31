@@ -82,10 +82,10 @@ dependencyResolutionManagement {
             name = "saveourtool/okio-extras"
             url = uri("https://maven.pkg.github.com/saveourtool/okio-extras")
             credentials {
-                username = providers.gradleProperty("gpr.user")
-                    .orElse(System.getenv("GITHUB_ACTOR")).get()
-                password = providers.gradleProperty("gpr.key")
-                    .orElse(System.getenv("GITHUB_TOKEN")).get()
+                username = providers.gradleProperty("gpr.user").orNull
+                    ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.key").orNull
+                    ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
