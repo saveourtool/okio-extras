@@ -38,6 +38,14 @@ configure<ReckonExtension> {
         Optional.of(PATCH)
     }
 
+    /*-
+     * The version is incremented on PATCH version by default.
+     *
+     * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
+     */
+    setDefaultInferredScope(PATCH)
+
+
     /*
      * Run `./gradlew -Preckon.stage=final reckonTagCreate` when the Git
      * repository is clean.
