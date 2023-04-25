@@ -45,7 +45,6 @@ configure<ReckonExtension> {
      */
     setDefaultInferredScope(PATCH)
 
-
     /*
      * Run `./gradlew -Preckon.stage=final reckonTagCreate` when the Git
      * repository is clean.
