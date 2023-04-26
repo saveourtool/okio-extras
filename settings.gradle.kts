@@ -13,7 +13,7 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise") version "3.13"
-    id("org.ajoberstar.reckon.settings") version "0.17.0-beta.4"
+    id("org.ajoberstar.reckon.settings") version "0.18.0"
 }
 
 configure<ReckonExtension> {
@@ -37,6 +37,13 @@ configure<ReckonExtension> {
     setScopeCalc {
         Optional.of(PATCH)
     }
+
+    /*-
+     * The version is incremented on PATCH version by default.
+     *
+     * PATCH: 1.0.0 -> 1.0.1-SNAPSHOT
+     */
+    setDefaultInferredScope(PATCH)
 
     /*
      * Run `./gradlew -Preckon.stage=final reckonTagCreate` when the Git
