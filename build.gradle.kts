@@ -69,6 +69,7 @@ kotlin {
             mingwX64(),
             linuxX64(),
             macosX64(),
+            macosArm64(),
         ).forEach { target ->
             getByName("${target.name}Main").dependsOn(nativeMain)
             getByName("${target.name}Test").dependsOn(nativeTest)
