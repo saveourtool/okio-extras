@@ -42,7 +42,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("com.squareup.okio:okio:3.3.0")
+                api("com.squareup.okio:okio:3.4.0")
             }
         }
 
