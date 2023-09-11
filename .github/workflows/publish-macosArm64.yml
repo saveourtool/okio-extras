@@ -16,7 +16,7 @@ jobs:
     name: 'Publish macosArm64'
     runs-on: [self-hosted, macOS, ARM64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Fetch Git tags, so that semantic version can be calculated.
           # Alternatively, run `git fetch --prune --unshallow --tags` as the
