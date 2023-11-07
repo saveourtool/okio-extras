@@ -1,48 +1,28 @@
 package com.saveourtool.system
 
-import kotlin.reflect.KFunction0
+actual fun isWindowsInternal(): Boolean =
+    osNameOrNull.let { osName: String? ->
+        osName != null && osName.startsWith("Windows")
+    }
 
-actual object OsFamily {
-    actual fun isWindows(): Boolean =
-        osNameOrNull.let { osName: String? ->
-            osName != null && osName.startsWith("Windows")
-        }
+actual fun isUnixInternal(): Boolean =
+    osNameOrNull in sequenceOf(
+        "Linux",
+        "Mac OS X",
+        "FreeBSD",
+        "AIX",
+        "SunOS", "Solaris",
+        "HP-UX",
+    )
 
-    fun isLinux(): Boolean =
-        osNameOrNull == "Linux"
+actual fun isUnknownInternal(): Boolean =
+    !isWindowsInternal() && !isUnixInternal()
 
-    fun isMacOsX(): Boolean =
-        osNameOrNull == "Mac OS X"
+actual fun osNameInternal(): String =
+    osNameOrNull + ' ' + System.getProperty("os.version")
 
-    fun isSolaris(): Boolean =
-        osNameOrNull in sequenceOf("SunOS", "Solaris")
+private val osNameOrNull: String?
+    get() =
+        System.getProperty("os.name")
 
-    fun isFreeBsd(): Boolean =
-        osNameOrNull == "FreeBSD"
 
-    fun isAix(): Boolean =
-        osNameOrNull == "AIX"
-
-    fun isHpUx(): Boolean =
-        osNameOrNull == "HP-UX"
-
-    actual fun isUnix(): Boolean =
-        sequenceOf(
-            OsFamily::isLinux,
-            OsFamily::isMacOsX,
-            OsFamily::isFreeBsd,
-            OsFamily::isAix,
-            OsFamily::isSolaris,
-            OsFamily::isHpUx,
-        ).any(KFunction0<Boolean>::invoke)
-
-    actual fun isUnknown(): Boolean =
-        !isWindows() && !isUnix()
-
-    actual fun osName(): String =
-        osNameOrNull + ' ' + System.getProperty("os.version")
-
-    private val osNameOrNull: String?
-        get() =
-            System.getProperty("os.name")
-}
