@@ -36,12 +36,6 @@ $dokka.location:com.saveourtool.okio/Uri/schemeSpecificPart/#/PointingToDeclarat
 $dokka.location:com.saveourtool.okio/Uri/toString/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/to-string.html
 $dokka.location:com.saveourtool.system////PointingToDeclaration/okio-extras/com.saveourtool.system/index.html
 $dokka.location:com.saveourtool.system/OsFamily///PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/index.html
-$dokka.location:com.saveourtool.system/OsFamily/isAix/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-aix.html
-$dokka.location:com.saveourtool.system/OsFamily/isFreeBsd/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-free-bsd.html
-$dokka.location:com.saveourtool.system/OsFamily/isHpUx/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-hp-ux.html
-$dokka.location:com.saveourtool.system/OsFamily/isLinux/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-linux.html
-$dokka.location:com.saveourtool.system/OsFamily/isMacOsX/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-mac-os-x.html
-$dokka.location:com.saveourtool.system/OsFamily/isSolaris/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-solaris.html
 $dokka.location:com.saveourtool.system/OsFamily/isUnix/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-unix.html
 $dokka.location:com.saveourtool.system/OsFamily/isUnknown/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-unknown.html
 $dokka.location:com.saveourtool.system/OsFamily/isWindows/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-windows.html
