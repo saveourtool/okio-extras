@@ -1,21 +1,23 @@
 package com.saveourtool.system
 
+import kotlin.experimental.ExperimentalNativeApi
+import kotlin.native.OsFamily
 import kotlin.native.OsFamily.UNKNOWN
 import kotlin.native.OsFamily.WASM
 import kotlin.native.OsFamily.WINDOWS
-import kotlin.native.OsFamily.values
 
-actual object OsFamily {
-    actual fun isWindows(): Boolean =
-        Platform.osFamily == WINDOWS
+@OptIn(ExperimentalNativeApi::class)
+actual fun isWindowsInternal(): Boolean =
+    Platform.osFamily == WINDOWS
 
-    actual fun isUnix(): Boolean =
-        Platform.osFamily in
-                values().asSequence() - sequenceOf(WINDOWS, WASM, UNKNOWN)
+@OptIn(ExperimentalNativeApi::class)
+actual fun isUnixInternal(): Boolean =
+    Platform.osFamily in
+            OsFamily.entries.asSequence() - sequenceOf(WINDOWS, WASM, UNKNOWN)
 
-    actual fun isUnknown(): Boolean =
-        !isWindows() && !isUnix()
+actual fun isUnknownInternal(): Boolean =
+    !isWindowsInternal() && !isUnixInternal()
 
-    actual fun osName(): String =
-        Platform.osFamily.name
-}
+@OptIn(ExperimentalNativeApi::class)
+actual fun osNameInternal(): String =
+    Platform.osFamily.name

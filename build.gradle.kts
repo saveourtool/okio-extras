@@ -35,6 +35,11 @@ kotlin {
     jvm()
     jvmToolchain(jdkVersion = 8)
 
+    mingwX64()
+    linuxX64()
+    macosX64()
+    macosArm64()
+
     @Suppress(
         "UnusedPrivateMember",
         "UNUSED_VARIABLE",
@@ -51,28 +56,6 @@ kotlin {
                 api(kotlin("test"))
                 api("io.kotest:kotest-assertions-core:5.8.0")
             }
-        }
-
-        val nativeMain by creating {
-            dependsOn(commonMain)
-        }
-
-        val nativeTest by creating {
-            dependsOn(commonTest)
-        }
-
-        val jvmMain by getting
-
-        val jvmTest by getting
-
-        sequenceOf(
-            mingwX64(),
-            linuxX64(),
-            macosX64(),
-            macosArm64(),
-        ).forEach { target ->
-            getByName("${target.name}Main").dependsOn(nativeMain)
-            getByName("${target.name}Test").dependsOn(nativeTest)
         }
     }
 }
