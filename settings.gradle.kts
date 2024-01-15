@@ -13,7 +13,7 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise") version "3.16.1"
-    id("org.ajoberstar.reckon.settings") version "0.18.1"
+    id("org.ajoberstar.reckon.settings") version "0.18.2"
 }
 
 configure<ReckonExtension> {
