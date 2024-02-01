@@ -50,7 +50,7 @@ jobs:
       - name: 'Publish a release (Linux)'
         id: publish-linux
         if: ${{ runner.os == 'Linux' }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
             gradle-version: wrapper
             arguments: |
@@ -64,7 +64,7 @@ jobs:
       - name: 'Publish a release (Windows)'
         id: publish-windows
         if: ${{ runner.os == 'Windows' }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           arguments: |
@@ -76,7 +76,7 @@ jobs:
       - name: 'Publish a release (Mac OS X)'
         id: publish-macosx
         if: ${{ runner.os == 'macOS' }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           arguments: |

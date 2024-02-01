@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-konan-
 
       - name: 'Execute Gradle build'
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           arguments: |

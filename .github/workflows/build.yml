@@ -63,7 +63,7 @@ jobs:
 
       - name: 'Run unit tests'
         id: test
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           # Neither `check` nor `allTests` targets result in JUnit XML reports
@@ -110,7 +110,7 @@ jobs:
 
       - name: 'Execute Gradle build'
         id: build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           arguments: |
@@ -121,7 +121,7 @@ jobs:
       - name: 'Publish a snapshot (Java 17 only)'
         id: publish
         if: ${{ github.event_name == 'push' && github.ref_type == 'branch' && github.ref == 'refs/heads/master' && matrix.java-version == 17 }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           gradle-version: wrapper
           arguments: |
