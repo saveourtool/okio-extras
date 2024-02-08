@@ -4,6 +4,8 @@ import java.util.Optional
 
 rootProject.name = "okio-extras"
 
+includeBuild("gradle/plugins")
+
 pluginManagement {
     repositories {
         mavenCentral()
