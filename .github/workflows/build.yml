@@ -9,13 +9,15 @@ on:
 
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
-  GPG_SEC: ${{ secrets.PGP_SEC }}
-  GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+  PGP_SEC: ${{ secrets.PGP_SEC }}
+  PGP_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+  SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+  SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
 jobs:
   build:
     name: 'Build (Java ${{ matrix.java-version }})'
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       # We need multiple builds to run even if the 1st one is failing, because
       # test failures may be Java-specific (or the tests themselves flaky).
@@ -126,6 +128,7 @@ jobs:
           gradle-version: wrapper
           arguments: |
             publish
+            -Preckon.stage=snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -133,7 +136,7 @@ jobs:
     name: 'Publish JUnit test results (Java ${{ matrix.java-version }})'
     if: ${{ always() }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:

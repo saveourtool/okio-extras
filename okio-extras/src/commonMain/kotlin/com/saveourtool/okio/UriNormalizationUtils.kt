@@ -281,7 +281,7 @@ private fun String.hasDotAtEnd(index: Int): Boolean =
 
 private fun String.hasTwoDotsAtEnd(index: Int): Boolean =
     index == length - 2 &&
-            endsWith("..")
+            endsWith("")
 
 private fun String.hasDotBeforeSlash(index: Int): Boolean =
     index <= length - 2 &&

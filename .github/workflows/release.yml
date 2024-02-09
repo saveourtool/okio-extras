@@ -1,4 +1,4 @@
-name: 'Release'
+name: Create release to Maven Central
 
 on:
   push:
@@ -6,91 +6,55 @@ on:
       - 'v*'
 
 env:
-  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
-  GPG_SEC: ${{ secrets.PGP_SEC }}
-  GPG_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+  PGP_SEC: ${{ secrets.PGP_SEC }}
+  PGP_PASSWORD: ${{ secrets.PGP_PASSWORD }}
+  SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+  SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
 jobs:
   release:
-    name: 'Release'
+    name: Build release
     runs-on: ${{ matrix.os }}
-
     strategy:
-      fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-
+        os: [ macos-latest ]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          # Fetch Git tags, so that semantic version can be calculated.
-          # Alternatively, run `git fetch --prune --unshallow --tags` as the
-          # next step, see
-          # https://github.com/actions/checkout/issues/206#issuecomment-607496604.
+          # release workflow should have access to all tags
           fetch-depth: 0
-
-      - name: 'Set up Java 17'
-        uses: actions/setup-java@v4
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: 11
           distribution: zulu
-          java-package: jdk+fx
-
-      - name: 'Cache ~/.konan'
-        id: cache-konan
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.konan
-          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-release
-          restore-keys: |
-            ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}-
-            ${{ runner.os }}-konan-
-
-      - name: 'Publish a release (Linux)'
-        id: publish-linux
-        if: ${{ runner.os == 'Linux' }}
-        uses: gradle/gradle-build-action@v3
-        with:
-            gradle-version: wrapper
-            arguments: |
-                build
-                publishJvmPublicationToGitHubRepository
-                publishKotlinMultiplatformPublicationToGitHubRepository
-                publishLinuxX64PublicationToGitHubRepository
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 'Publish a release (Windows)'
-        id: publish-windows
-        if: ${{ runner.os == 'Windows' }}
-        uses: gradle/gradle-build-action@v3
+      - name: Status git before
+        run: git status
+      - uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
-          arguments: |
-            build
-            publishMingwX64PublicationToGitHubRepository
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 'Publish a release (Mac OS X)'
-        id: publish-macosx
-        if: ${{ runner.os == 'macOS' }}
-        uses: gradle/gradle-build-action@v3
-        with:
-          gradle-version: wrapper
-          arguments: |
-            build
-            publishMacosX64PublicationToGitHubRepository
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Until https://github.com/burrunan/gradle-cache-action/issues/42 is addressed, gradle should be run as a separate step
+      - name: gradle release from tag
+        # if workflow is triggered after push of a tag, deploy full release
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: ./gradlew
+          --console=rich
+          -Prelease
+          -PgprUser=${{ github.actor }}
+          -PgprKey=${{ secrets.GITHUB_TOKEN }}
+          publishToSonatype
+      - name: Status git after
+        if: ${{ always() }}
+        run: git status
 
   github_release:
     needs: release
-    name: 'Github Release'
+    name: Create Github Release
     runs-on: ubuntu-latest
     steps:
-      - name: 'Github Release'
+      - name: Create Github Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

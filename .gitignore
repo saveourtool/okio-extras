@@ -5,3 +5,6 @@
 /.run/
 /.settings/
 /build/
+/gradle/plugins/.gradle/
+/gradle/plugins/build/
+/core/build/
