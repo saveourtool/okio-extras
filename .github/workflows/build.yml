@@ -154,7 +154,7 @@ jobs:
 
         # Uses Docker, that's why Linux-only.
       - name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action)'
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: EnricoMi/publish-unit-test-result-action/macos@v2
         with:
           check_name: 'JUnit Tests (EnricoMi/publish-unit-test-result-action, Java ${{ matrix.java-version }})'
           files: |

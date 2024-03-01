@@ -16,7 +16,7 @@ import org.gradle.kotlin.dsl.configure
 fun Project.configureDetekt() {
     apply<DetektPlugin>()
     configure<DetektExtension> {
-        config = rootProject.files("detekt.yml")
+        config.from(rootProject.files("detekt.yml"))
         buildUponDefaultConfig = true
         debug = true
     }

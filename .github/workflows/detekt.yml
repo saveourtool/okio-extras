@@ -51,7 +51,7 @@ jobs:
 
       - name: 'Publish SARIF to GitHub'
         id: publish
-        if: ${{ always() }}
+        if: ${{ failure() }}
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: build/reports/detekt/
