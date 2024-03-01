@@ -23,13 +23,14 @@ fun Project.configureVersioning() {
 
     val isSnapshot = hasProperty("reckon.stage") && property("reckon.stage") == "snapshot"
     configure<ReckonExtension> {
-        scopeFromProp()
+        calcScopeFromProp()
         if (isSnapshot) {
             // we should build snapshots only for snapshot publishing, so it requires explicit parameter
-            snapshotFromProp()
+            snapshots()
         } else {
-            stageFromProp("alpha", "rc", "final")
+            stages("alpha", "rc", "final")
         }
+        calcStageFromProp()
     }
 
     // to activate release, provide `-Prelease` or `-Prelease=true`. To deactivate, either omit the property, or set `-Prelease=false`.
