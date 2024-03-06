@@ -19,13 +19,14 @@ import org.gradle.internal.logging.text.StyledTextOutput
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Failure
 import org.gradle.internal.logging.text.StyledTextOutput.Style.Success
 import org.gradle.internal.logging.text.StyledTextOutputFactory
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.SigningExtension
+import org.jetbrains.dokka.gradle.DokkaPlugin
 
 /**
  * Enables signing of the artifacts if the `signingKey` project property is set.
@@ -78,10 +79,11 @@ fun Project.configureSigning() {
 
 @Suppress("TOO_LONG_FUNCTION")
 internal fun Project.configurePublications() {
+    apply<DokkaPlugin>()
     val dokkaJar: Jar = tasks.create<Jar>("dokkaJar") {
         group = "documentation"
         archiveClassifier.set("javadoc")
-        from(tasks.findByName("dokkaHtml"))
+        from(tasks.getByName("dokkaHtml"))
     }
     configure<PublishingExtension> {
         repositories {
