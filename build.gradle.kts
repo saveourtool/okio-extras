@@ -1,6 +1,5 @@
 import com.saveourtool.buildutils.*
 
-
 plugins {
     kotlin("multiplatform") apply false
     id("com.saveourtool.buildutils.publishing-configuration")
@@ -8,8 +7,6 @@ plugins {
 }
 
 group = "com.saveourtool.okio-extras"
-
-configureVersioning()
 
 allprojects {
     repositories {
