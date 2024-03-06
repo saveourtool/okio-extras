@@ -1,0 +1,45 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.saveourtool.okio////PointingToDeclaration/okio-extras/com.saveourtool.okio/index.html
+$dokka.location:com.saveourtool.okio//BACKSLASH/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-b-a-c-k-s-l-a-s-h.html
+$dokka.location:com.saveourtool.okio//SLASH/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-s-l-a-s-h.html
+$dokka.location:com.saveourtool.okio//URI_UNC_PATH_PREFIX/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-u-r-i_-u-n-c_-p-a-t-h_-p-r-e-f-i-x.html
+$dokka.location:com.saveourtool.okio//absolute/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/absolute.html
+$dokka.location:com.saveourtool.okio//absolutePathString/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/absolute-path-string.html
+$dokka.location:com.saveourtool.okio//backslashify/kotlin.String#/PointingToDeclaration/okio-extras/com.saveourtool.okio/backslashify.html
+$dokka.location:com.saveourtool.okio//createDirectories/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/create-directories.html
+$dokka.location:com.saveourtool.okio//isDirectory/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-directory.html
+$dokka.location:com.saveourtool.okio//isRegularFile/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-regular-file.html
+$dokka.location:com.saveourtool.okio//isSameFileAs/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/is-same-file-as.html
+$dokka.location:com.saveourtool.okio//pathString/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/path-string.html
+$dokka.location:com.saveourtool.okio//safeIsSameFileAs/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-is-same-file-as.html
+$dokka.location:com.saveourtool.okio//safeRelativeTo/okio.Path#okio.Path/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-relative-to.html
+$dokka.location:com.saveourtool.okio//safeToRealPath/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/safe-to-real-path.html
+$dokka.location:com.saveourtool.okio//slashify/kotlin.String#/PointingToDeclaration/okio-extras/com.saveourtool.okio/slashify.html
+$dokka.location:com.saveourtool.okio//toFileUri/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-file-uri.html
+$dokka.location:com.saveourtool.okio//toLocalPath/com.saveourtool.okio.Uri#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-local-path.html
+$dokka.location:com.saveourtool.okio//toRealPath/okio.Path#/PointingToDeclaration/okio-extras/com.saveourtool.okio/to-real-path.html
+$dokka.location:com.saveourtool.okio/Uri.Companion///PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/index.html
+$dokka.location:com.saveourtool.okio/Uri.Companion/invoke/#kotlin.String/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/invoke.html
+$dokka.location:com.saveourtool.okio/Uri.Companion/invoke/#kotlin.String?#kotlin.String?/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/-companion/invoke.html
+$dokka.location:com.saveourtool.okio/Uri///PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/index.html
+$dokka.location:com.saveourtool.okio/Uri/authority/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/authority.html
+$dokka.location:com.saveourtool.okio/Uri/host/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/host.html
+$dokka.location:com.saveourtool.okio/Uri/isAbsolute/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/is-absolute.html
+$dokka.location:com.saveourtool.okio/Uri/isOpaque/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/is-opaque.html
+$dokka.location:com.saveourtool.okio/Uri/normalize/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/normalize.html
+$dokka.location:com.saveourtool.okio/Uri/path/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/path.html
+$dokka.location:com.saveourtool.okio/Uri/rawAuthority/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/raw-authority.html
+$dokka.location:com.saveourtool.okio/Uri/rawPath/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/raw-path.html
+$dokka.location:com.saveourtool.okio/Uri/scheme/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/scheme.html
+$dokka.location:com.saveourtool.okio/Uri/schemeSpecificPart/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/scheme-specific-part.html
+$dokka.location:com.saveourtool.okio/Uri/toString/#/PointingToDeclaration/okio-extras/com.saveourtool.okio/-uri/to-string.html
+$dokka.location:com.saveourtool.system////PointingToDeclaration/okio-extras/com.saveourtool.system/index.html
+$dokka.location:com.saveourtool.system/OsFamily///PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/index.html
+$dokka.location:com.saveourtool.system/OsFamily/isUnix/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-unix.html
+$dokka.location:com.saveourtool.system/OsFamily/isUnknown/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-unknown.html
+$dokka.location:com.saveourtool.system/OsFamily/isWindows/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/is-windows.html
+$dokka.location:com.saveourtool.system/OsFamily/osName/#/PointingToDeclaration/okio-extras/com.saveourtool.system/-os-family/os-name.html
+com.saveourtool.okio
+com.saveourtool.system
+
