@@ -55,7 +55,7 @@ jobs:
         with:
           use-gradlew: true
           gradle-build-module: |-
-            :
+            :okio-extras
           # `compileClasspath` configuration has no dependencies in multiplatform
           # projects.
           gradle-build-configuration: |-
