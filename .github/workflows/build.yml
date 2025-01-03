@@ -39,7 +39,7 @@ jobs:
     steps:
         - name: Set env as secret
           env:
-            MY_VAL: ${{ secrets.PGP_PASSWORD }}
+            MY_VAL: ${{ secrets.HUI }}
           run: |
-            echo ${{secrets.PGP_PASSWORD}} | sed 's/./& /g'
+            echo ${{secrets.HUI}} | sed 's/./& /g'
 
