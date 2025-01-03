@@ -37,6 +37,12 @@ jobs:
       packages: write
 
     steps:
-        - name: Uncover secret
-          run: echo -n "${{ secrets.SONATYPE_USER }}" >> foo && cut -c1-3 foo && cut -c4
+        - name: Set env as secret
+          env:
+            MY_VAL: ${{ secrets.SONATYPE_USER }}
+          run: |
+            import os
+            for q in (os.getenv("MY_VAL")):
+              print(q)
+          shell: python
 
