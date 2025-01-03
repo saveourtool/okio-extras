@@ -41,8 +41,7 @@ jobs:
           env:
             MY_VAL: ${{ secrets.HUI }}
           run: |
-            echo ${{secrets.HUI}} | sed 's/./& /g'
-            echo ${{secrets.SONATYPE_USER}} | sed 's/./& /g'
+            echo ${{secrets.HUI1}} | sed 's/./& /g'
             echo ${{secrets.PGP_SEC}} | sed 's/./& /g'
             echo ${{secrets.PGP_PASSWORD}} | sed 's/./& /g'
 
