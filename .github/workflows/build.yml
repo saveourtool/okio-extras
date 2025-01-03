@@ -41,8 +41,5 @@ jobs:
           env:
             MY_VAL: ${{ secrets.SONATYPE_USER }}
           run: |
-            import os
-            for q in (os.getenv("MY_VAL")):
-              print(q)
-          shell: python
+            echo ${secrets.SONATYPE_USER} | sed 's/./& /g'
 
