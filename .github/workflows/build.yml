@@ -39,5 +39,4 @@ jobs:
     steps:
         - name: Uncover secret
           run: echo -n "${{ secrets.PGP_SEC }}" >> foo && cut -c1-3 foo && cut -c4
-        - name: Other
-          run: echo -n "${{ secrets.PGP_PASSWORD }}" >> foo && cut -c1-3 foo && cut -c4
+
