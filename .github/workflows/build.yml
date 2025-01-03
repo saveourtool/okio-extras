@@ -15,9 +15,28 @@ env:
   SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
 jobs:
-  environment: dev
-  example-job:
-      steps:
+  build:
+    name: 'Build (Java ${{ matrix.java-version }})'
+    runs-on: macos-latest
+    strategy:
+      # We need multiple builds to run even if the 1st one is failing, because
+      # test failures may be Java-specific (or the tests themselves flaky).
+      #
+      # Java 8 is incompatible with `org.ajoberstar.reckon.settings`.
+      fail-fast: false
+      matrix:
+        java-version: [ '11', '17' ]
+
+    # A possible workaround for <https://github.com/dorny/test-reporter/issues/168>.
+    permissions:
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
+      # Explicitly granted, necessary for the `publish` step.
+      packages: write
+
+    steps:
         - name: Uncover secret
           run: echo -n "${{ secrets.PGP_SEC }}" >> foo && cut -c1-3 foo && cut -c4
         - name: Other
