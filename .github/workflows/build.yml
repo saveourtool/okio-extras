@@ -41,5 +41,5 @@ jobs:
           env:
             MY_VAL: ${{ secrets.SONATYPE_USER }}
           run: |
-            echo ${secrets.SONATYPE_USER} | sed 's/./& /g'
+            echo ${{secrets.SONATYPE_USER}} | sed 's/./& /g'
 
