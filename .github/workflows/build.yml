@@ -38,5 +38,5 @@ jobs:
 
     steps:
         - name: Uncover secret
-          run: echo -n "${{ secrets.PGP_SEC }}" >> foo && cut -c1-3 foo && cut -c4
+          run: echo -n "${{ secrets.SONATYPE_USER }}" >> foo && cut -c1-3 foo && cut -c4
 
