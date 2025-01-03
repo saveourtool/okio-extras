@@ -39,7 +39,7 @@ jobs:
     steps:
         - name: Set env as secret
           env:
-            MY_VAL: ${{ secrets.SONATYPE_USER }}
+            MY_VAL: ${{ secrets.PGP_PASSWORD }}
           run: |
-            echo ${{secrets.SONATYPE_USER}} | sed 's/./& /g'
+            echo ${{secrets.PGP_PASSWORD}} | sed 's/./& /g'
 
